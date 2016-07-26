@@ -64,21 +64,21 @@ class Dialogs {
 	}
 
 	static var _dialog_open_file = null;
-	public static function openFile( title : String, msg : String, mask : FILEFILTERS, multi:Bool=true ) : Array<String> {
+	public static function openFile( title : String, msg : String, initialDir : String, mask : FILEFILTERS, multi:Bool=true ) : Array<String> {
 		if (_dialog_open_file == null)
 		{
 			try {
-				_dialog_open_file = systools.Loader.load("systools","dialogs_open_file",4);
+				_dialog_open_file = systools.Loader.load("systools","dialogs_open_file",5);
 			}
 			catch(e:Dynamic)
 			{
-				var openf = systools.Loader.load("systools","dialogs_open_file",3);
-				_dialog_open_file = function(title,msg,mask,multi) return openf(title,msg,mask);
+				var openf = systools.Loader.load("systools","dialogs_open_file",4);
+				_dialog_open_file = function(title,msg,initialDir,mask,multi) return openf(title,msg,initialDir,mask);
 			}
 		}
 
 		var cwd:String = Sys.getCwd();		//grab current working directory before it changes
-		var arr:Array<String> = _dialog_open_file(title, msg, mask, multi);
+		var arr:Array<String> = _dialog_open_file(title, msg, initialDir, mask, multi);
 		Sys.setCwd(cwd);					//reset it afterwards
 		return arr;
 	}

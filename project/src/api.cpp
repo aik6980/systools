@@ -122,7 +122,7 @@ static value dialogs_save_file( value title, value msg, value initialdir, value 
 }
 DEFINE_PRIM(dialogs_save_file,4);
 
-static value dialogs_open_file( value title, value msg, value mask,value multi) {
+static value dialogs_open_file( value title, value msg, value initialdir, value mask,value multi) {
 	value result = val_null;
 	struct ARG_FILEFILTERS filters = {0,0,0};
 	struct RES_STRINGLIST files;
@@ -130,6 +130,7 @@ static value dialogs_open_file( value title, value msg, value mask,value multi) 
 	val_check(title,string);
 	val_check(msg,string);
 	val_check(multi,bool);
+	val_check(initialdir, string);
 	
 	if (val_is_object(mask)) {
 		value count = val_field(mask,val_id("count"));
@@ -153,7 +154,7 @@ static value dialogs_open_file( value title, value msg, value mask,value multi) 
 		}
 	}
 	
-	systools_dialogs_open_file(val_string(title),val_string(msg),filters.count? &filters : NULL ,val_bool(multi) ,&files);
+	systools_dialogs_open_file(val_string(title),val_string(msg),val_string(initialdir),filters.count? &filters : NULL ,val_bool(multi) ,&files);
 	if (files.count) {
 		result = alloc_array(files.count);
 		while(files.count) {
@@ -174,7 +175,7 @@ static value dialogs_open_file( value title, value msg, value mask,value multi) 
 	
 	return result;
 }
-DEFINE_PRIM(dialogs_open_file,4);//note this
+DEFINE_PRIM(dialogs_open_file,5);//note this
 
 static value dialogs_folder( value title, value msg ) {
 	char * v;

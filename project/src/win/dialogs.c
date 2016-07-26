@@ -75,7 +75,7 @@ char* systools_dialogs_save_file( const char *title, const char *_, const char *
 	}
 }
 
-void systools_dialogs_open_file( const char *title, const char *msg, struct ARG_FILEFILTERS *mask , int multi, struct RES_STRINGLIST *r){
+void systools_dialogs_open_file( const char *title, const char *msg, const char *initialdir, struct ARG_FILEFILTERS *mask , int multi, struct RES_STRINGLIST *r){
 	OPENFILENAME ofn;
 	r->count = 0;
 	r->strings = NULL;
@@ -83,6 +83,7 @@ void systools_dialogs_open_file( const char *title, const char *msg, struct ARG_
 	memset(&ofn,0,sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.lpstrTitle = (char*) title;
+	ofn.lpstrInitialDir = (char*) initialdir;
 	
 	if(multi){
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_ALLOWMULTISELECT | OFN_EXPLORER | OFN_HIDEREADONLY; 

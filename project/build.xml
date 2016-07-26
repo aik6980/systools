@@ -39,6 +39,7 @@
   <files id="systools" unless="macos"/>
   <files id="mac" if="macos"/>
 
+  <lib name="legacy_stdio_definitions.lib" if="windows"/>
   <lib name="kernel32.lib" if="windows"/>
   <lib name="user32.lib" if="windows"/>
   <lib name="comdlg32.lib" if="windows"/>
